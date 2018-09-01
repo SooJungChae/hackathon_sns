@@ -22,5 +22,12 @@ class GlobalUtils {
 
             return "$hours” $minutes’ $seconds."
         }
+
+        fun SecToNatureString(seconds: Long): String {
+            val minutes = (seconds / (60) % 60)
+            val hours = (seconds / (60 * 60) % 24)
+
+            return "${hours}시간 ${minutes}분"
+        }
     }
 }

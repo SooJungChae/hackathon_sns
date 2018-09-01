@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.planethackathon.worklifebalancelife.R
 import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
+import com.planethackathon.worklifebalancelife.common.GlobalUtils
 
 /**
  * A simple [Fragment] subclass.
@@ -34,7 +35,8 @@ class LifeFragment : Fragment() {
     private fun bindElement() {
         val setting = FiftyTwoHoursApplication.getSettingManager()
         val txtLifeInfoDetail = mContainer?.findViewById<TextView>(R.id.txt_life_info_detail)
-        txtLifeInfoDetail?.setText(String.format(getString(R.string.txt_life_info), setting.userName, ""))
+
+        txtLifeInfoDetail?.text = String.format(getString(R.string.txt_work_info), setting.userName, GlobalUtils.SecToNatureString(setting.userElapsedTime))
     }
 
     companion object {

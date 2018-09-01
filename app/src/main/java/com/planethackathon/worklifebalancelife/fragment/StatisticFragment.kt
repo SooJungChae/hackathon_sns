@@ -12,7 +12,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.planethackathon.worklifebalancelife.R
-import com.planethackathon.worklifebalancelife.common.GlobalUtils
 import com.planethackathon.worklifebalancelife.common.History
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,22 +72,22 @@ class StatisticFragment : Fragment() {
 
                         activity!!.runOnUiThread(Runnable {
                             var workInterval: Long? = result
-//                            val hour = workInterval!! / 3600
-//                            workInterval -= hour * 3600
-//                            val min = workInterval / 60
-//                            workInterval -= min * 60
+                            val hour = workInterval!! / 3600
+                            workInterval -= hour * 3600
+                            val min = workInterval / 60
+                            workInterval -= min * 60
 
-//                            workIntervalTextView.setText(hour.toString() + "\"" + min + "\'" + workInterval + ".")
-                            workIntervalTextView.setText(GlobalUtils.millisToString(workInterval!!))
+                            workIntervalTextView.setText(hour.toString() + "\"" + min + "\'" + workInterval + ".")
+//                            workIntervalTextView.setText(GlobalUtils.millisToString(workInterval!!))
 
                             var lifeInterval: Long? = historyList.size.toLong() * 3600L * 24 - result
-//                            val hour2 = lifeInterval!! / 3600
-//                            lifeInterval -= hour2 * 3600
-//                            val min2 = lifeInterval / 60
-//                            lifeInterval -= min2 * 60
+                            val hour2 = lifeInterval!! / 3600
+                            lifeInterval -= hour2 * 3600
+                            val min2 = lifeInterval / 60
+                            lifeInterval -= min2 * 60
 
-//                            lifeIntervalTextView.setText(hour2.toString() + "\"" + min2 + "\'" + lifeInterval + ".")
-                            lifeIntervalTextView.setText(GlobalUtils.millisToString(lifeInterval!!))
+                            lifeIntervalTextView.setText(hour2.toString() + "\"" + min2 + "\'" + lifeInterval + ".")
+//                            lifeIntervalTextView.setText(GlobalUtils.millisToString(lifeInterval!!))
                         })
 
 

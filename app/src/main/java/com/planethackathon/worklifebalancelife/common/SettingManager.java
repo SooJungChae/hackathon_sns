@@ -15,6 +15,7 @@ public class SettingManager {
     public static final String KEY_USER_ID = "__key_user_id_";
     public static final String KEY_USER_NAME = "__key_user_name_";
     public static final String KEY_USER_ELAPSED_TIME = "__key_user_elapsed_time_";
+    public static final String KEY_USER_TEMP_START_TIME = "__key_user_temp_start_time";
 
     Context mContext;
 
@@ -23,6 +24,7 @@ public class SettingManager {
     String userId;
     String userName;
     long userElapsedTime;
+    long tempStartTime;
 
     public SettingManager(Context mContext) {
         this.mContext = mContext;
@@ -34,6 +36,7 @@ public class SettingManager {
             this.userId = mSharedPref.getString(KEY_USER_ID, "");
             this.userName = mSharedPref.getString(KEY_USER_NAME, "");
             this.userElapsedTime = mSharedPref.getLong(KEY_USER_ELAPSED_TIME, 0);
+            this.tempStartTime = mSharedPref.getLong(KEY_USER_TEMP_START_TIME, 0);
 
             isLoaded = true;
         }
@@ -68,6 +71,16 @@ public class SettingManager {
     }
 
     public Long getUserElapsedTime() { return userElapsedTime; }
+
+    public boolean setTempStartTime(long tempStartTime) {
+        this.tempStartTime = tempStartTime;
+
+        return getSharedPreference(mContext).edit()
+                .putLong(KEY_USER_TEMP_START_TIME, tempStartTime)
+                .commit();
+    }
+
+    public Long getTempStartTime() { return tempStartTime; }
 
     private static SharedPreferences getSharedPreference(@NonNull Context context) {
         return context.getSharedPreferences(SUFFIX_SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);

@@ -1,5 +1,6 @@
 package com.planethackathon.worklifebalancelife
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -7,6 +8,9 @@ import android.support.annotation.RequiresApi
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -18,6 +22,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         viewpager_main.adapter = mAdapter
+        viewpager_main.offscreenPageLimit = 4
 
         viewpager_main.offscreenPageLimit = 4
 
@@ -39,10 +44,18 @@ class MainActivity : BaseActivity() {
             }
         })
 
-        txt_work_main.setOnClickListener { viewpager_main.setCurrentItem(0, true) }
-        txt_life_main.setOnClickListener { viewpager_main.setCurrentItem(1, true) }
-
         onSelectWork()
+
+        val btnLogOut = findViewById<ImageView>(R.id.btn_logout)
+        btnLogOut?.setOnClickListener {
+            val setting = FiftyTwoHoursApplication.getSettingManager()
+            setting.userId = ""
+
+            Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

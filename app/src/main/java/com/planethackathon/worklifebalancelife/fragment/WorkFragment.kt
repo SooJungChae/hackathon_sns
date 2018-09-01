@@ -1,5 +1,6 @@
 package com.planethackathon.worklifebalancelife.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -10,21 +11,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.planethackathon.worklifebalancelife.LoginActivity
 import com.planethackathon.worklifebalancelife.R
 import com.planethackathon.worklifebalancelife.TestActivity
 import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
 import com.planethackathon.worklifebalancelife.common.GlobalUtils
 import com.planethackathon.worklifebalancelife.common.History
 import kotlinx.android.synthetic.main.fragment_work.*
+import java.text.SimpleDateFormat
 import java.util.*
 
-class WorkFragment : Fragment() {
+@SuppressLint("ValidFragment")
+class WorkFragment() : Fragment() {
     var mContainer: View? = null
     var countSecond: TimerTask? = null
     var timer: Timer? = null
@@ -50,7 +51,7 @@ class WorkFragment : Fragment() {
         val logsRef = db.collection("users").document("Y3YGpTFg0Sb0kQb0BHfP").collection("logs")
 
         //READ
-        val dayQuery = logsRef.whereEqualTo("date", "2018-09-01")
+        val dayQuery = logsRef.whereEqualTo("date", "2018-09-02")
         dayQuery.get()
                 .addOnCompleteListener({ task ->
                     if (task.isSuccessful) {
@@ -78,9 +79,14 @@ class WorkFragment : Fragment() {
     private fun startWorkRecord() {
         countSecond = object : TimerTask() {
             override fun run() {
-                elapsedTime += 1000L
-                val resultTime = GlobalUtils.millisToString(elapsedTime)
-                activity?.runOnUiThread { txt_work_time.text = resultTime }
+                elapsedTime += 1L
+                val resultTime = GlobalUtils.secToString(elapsedTime)
+                activity?.runOnUiThread {
+                    txt_work_time.text = resultTime
+
+                    val setting = FiftyTwoHoursApplication.getSettingManager()
+                    txt_work_info_detail.text = String.format(getString(R.string.txt_work_info), setting.userName, GlobalUtils.SecToNatureString(elapsedTime))
+                }
             }
         }
 
@@ -102,6 +108,8 @@ class WorkFragment : Fragment() {
                 Toast.makeText(activity, "기록 시작", Toast.LENGTH_SHORT).show()
                 timer = Timer()
 
+                FiftyTwoHoursApplication.getSettingManager().tempStartTime = Calendar.getInstance().timeInMillis
+
                 startWorkRecord()
             } else {
                 btnWorkStart.setImageDrawable(ContextCompat.getDrawable(this@WorkFragment.context!!, R.drawable.play_button))
@@ -110,25 +118,46 @@ class WorkFragment : Fragment() {
                 val setting = FiftyTwoHoursApplication.getSettingManager()
                 setting.userElapsedTime = elapsedTime
 
+                writeToDB()
+
                 timer?.cancel()
                 timer = null
             }
         }
 
-        val btnLogOut = mContainer?.findViewById<ImageView>(R.id.btn_logout)
-        btnLogOut?.setOnClickListener {
-            val setting = FiftyTwoHoursApplication.getSettingManager()
-            setting.userId = ""
-
-            Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-
-            startActivity(Intent(activity, LoginActivity::class.java))
-            activity?.finish()
-        }
-
         val setting = FiftyTwoHoursApplication.getSettingManager()
         val txtWorkInfoDetail = mContainer?.findViewById<TextView>(R.id.txt_work_info_detail)
-        txtWorkInfoDetail?.text = String.format(getString(R.string.txt_work_info), setting.userName, "")
+        txtWorkInfoDetail?.text = String.format(getString(R.string.txt_work_info), setting.userName, GlobalUtils.SecToNatureString(setting.userElapsedTime))
+    }
+
+    fun writeToDB() {
+        val db = FirebaseFirestore.getInstance()
+        val logsRef = db.collection("users").document("Y3YGpTFg0Sb0kQb0BHfP").collection("logs")
+
+        val date = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("YYYY-MM-dd HH:mm:ss")
+        val sdfOnlyDate = SimpleDateFormat("YYYY-MM-dd")
+        val currentTime = sdf.format(date)
+        val currentDate = sdfOnlyDate.format(date)
+
+        val setting = FiftyTwoHoursApplication.getSettingManager()
+        val startDate = Date().apply {
+            this.time = setting.tempStartTime
+        }
+        val startString = sdf.format(startDate)
+
+        //ADD
+//        val history = History("2018-09-31", "2018-09-31 09:00:00", currentTime, "work", 32400L)
+        val interval = date.time - setting.tempStartTime
+        setting.tempStartTime = 0
+
+        val history = History(currentDate, startString, currentTime, "work", interval)
+        Log.d("TESTLOG", currentDate + "/" + startString + "/" + currentTime + "/" + interval)
+
+        logsRef.document().set(history)
+                .addOnSuccessListener { Log.d("SUCCESS", "success add") }
+                .addOnFailureListener { Log.e("FAIL", "fail add") }
+
     }
 
     companion object {

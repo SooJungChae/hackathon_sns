@@ -31,7 +31,7 @@ class SplashActivity : BaseActivity() {
             txt_splash_top.setText(R.string.txt_splash_main)
 
             val setting = FiftyTwoHoursApplication.getSettingManager()
-            txt_splash_bottom.text = GlobalUtils.millisToString(setting.userElapsedTime)
+            txt_splash_bottom.text = GlobalUtils.secToString(setting.userElapsedTime)
 
             var time = "" // 2018월 9월 첫째주
             Calendar.getInstance().apply {

@@ -1,8 +1,8 @@
 package com.planethackathon.worklifebalancelife;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -27,10 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -131,6 +126,27 @@ public class TestActivity extends AppCompatActivity {
                                     historyList.add(history);
                                     result += history.getInterval();
                                     Log.d("WEEK RESULT", history.toString());
+                                    final Long finalResult = result;
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Long workInterval = finalResult;
+                                            Long hour = workInterval/3600;
+                                            workInterval -= hour * 3600;
+                                            Long min = workInterval / 60;
+                                            workInterval -= min * 60;
+
+                                            //workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
+
+                                            Long lifeInterval = historyList.size() * 3600L * 24 - finalResult;
+                                            Long hour2 = lifeInterval/3600;
+                                            lifeInterval -= hour2 * 3600;
+                                            Long min2 = lifeInterval / 60;
+                                            lifeInterval -= min2 * 60;
+
+                                            //lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
+                                        }
+                                    });
                                 }
                                 runOnUiThread(new Runnable() {
                                     @Override
