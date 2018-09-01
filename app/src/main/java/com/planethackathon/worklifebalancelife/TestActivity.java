@@ -131,28 +131,27 @@ public class TestActivity extends AppCompatActivity {
                                     historyList.add(history);
                                     result += history.getInterval();
                                     Log.d("WEEK RESULT", history.toString());
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Long workInterval = result;
-                                            Long hour = workInterval/3600;
-                                            workInterval -= hour * 3600;
-                                            Long min = workInterval / 60;
-                                            workInterval -= min * 60;
-
-                                            //workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
-
-                                            Long lifeInterval = historyList.size() * 3600L * 24 - result;
-                                            Long hour2 = lifeInterval/3600;
-                                            lifeInterval -= hour2 * 3600;
-                                            Long min2 = lifeInterval / 60;
-                                            lifeInterval -= min2 * 60;
-
-                                            //lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
-                                        }
-                                    });
                                 }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+//                                        Long workInterval = result;
+//                                        Long hour = workInterval/3600;
+//                                        workInterval -= hour * 3600;
+//                                        Long min = workInterval / 60;
+//                                        workInterval -= min * 60;
+//
+//                                        //workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
+//
+//                                        Long lifeInterval = historyList.size() * 3600L * 24 - result;
+//                                        Long hour2 = lifeInterval/3600;
+//                                        lifeInterval -= hour2 * 3600;
+//                                        Long min2 = lifeInterval / 60;
+//                                        lifeInterval -= min2 * 60;
 
+                                        //lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
+                                    }
+                                });
                                 Log.d("WEEK", result.toString());
 
                             } else {
