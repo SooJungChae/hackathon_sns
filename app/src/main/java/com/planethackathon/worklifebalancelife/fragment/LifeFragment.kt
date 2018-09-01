@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.planethackathon.worklifebalancelife.R
+import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
 
 /**
  * A simple [Fragment] subclass.
@@ -23,8 +25,16 @@ class LifeFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         if (mContainer == null) {
             mContainer = inflater.inflate(R.layout.fragment_life, container, false)
+
+            bindElement()
         }
         return mContainer
+    }
+
+    private fun bindElement() {
+        val setting = FiftyTwoHoursApplication.getSettingManager()
+        val txtLifeInfoDetail = mContainer?.findViewById<TextView>(R.id.txt_life_info_detail)
+        txtLifeInfoDetail?.setText(String.format(getString(R.string.txt_life_info), setting.userName, ""))
     }
 
     companion object {

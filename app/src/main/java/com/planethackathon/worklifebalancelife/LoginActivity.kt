@@ -65,6 +65,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         setting.userId = mAuth.currentUser?.uid
+                        setting.userName = mAuth.currentUser?.displayName
                         successToLogin()
                     } else {
                         failToLogin()
