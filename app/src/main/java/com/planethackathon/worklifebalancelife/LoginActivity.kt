@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener {
@@ -25,6 +26,8 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        btn_signin.setOnClickListener { onLoginWithGoogle() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
