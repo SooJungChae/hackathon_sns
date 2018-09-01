@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
+import com.planethackathon.worklifebalancelife.common.GlobalUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
@@ -28,6 +29,9 @@ class SplashActivity : BaseActivity() {
     private fun initText() {
         if (isLogin()) {
             txt_splash_top.setText(R.string.txt_splash_main)
+
+            val setting = FiftyTwoHoursApplication.getSettingManager()
+            txt_splash_bottom.text = GlobalUtils.millisToString(setting.userElapsedTime)
 
             var time = "" // 2018월 9월 첫째주
             Calendar.getInstance().apply {

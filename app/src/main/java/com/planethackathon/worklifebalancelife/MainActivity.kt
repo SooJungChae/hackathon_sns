@@ -28,20 +28,17 @@ class MainActivity : BaseActivity() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> {
-                        onSelectWork()
-                    }
+                    0 -> onSelectWork()
 
-                    1 -> {
-                        onSelectLife()
-                    }
+                    1 -> onSelectLife()
 
-                    2 -> {
-                        container_main_title.visibility = View.GONE
-                    }
+                    2 -> container_main_title.visibility = View.GONE
                 }
             }
         })
+
+        txt_work_main.setOnClickListener { viewpager_main.setCurrentItem(0, true) }
+        txt_life_main.setOnClickListener { viewpager_main.setCurrentItem(1, true) }
 
         onSelectWork()
     }
