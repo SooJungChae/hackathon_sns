@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0-alpha-1'
+
     implementation 'com.android.support:support-v4:28.0.0-rc02'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.github.prolificinteractive:material-calendarview:1.6.0'

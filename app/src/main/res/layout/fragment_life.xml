@@ -44,7 +44,7 @@
             <TextView
                 android:id="@+id/txt_life_info"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="1dp"
                 android:text="내가 이번주에 삶에 쓴 시간은?!"
@@ -58,7 +58,6 @@
                 android:id="@+id/txt_life_info_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="@string/txt_life_info"
                 android:textColor="@color/black"
                 android:textSize="13dp"

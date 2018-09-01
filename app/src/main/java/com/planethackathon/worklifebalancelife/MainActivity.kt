@@ -19,6 +19,8 @@ class MainActivity : BaseActivity() {
 
         viewpager_main.adapter = mAdapter
 
+        viewpager_main.offscreenPageLimit = 4
+
         viewpager_main.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
