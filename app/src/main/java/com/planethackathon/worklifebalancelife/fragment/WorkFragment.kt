@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.planethackathon.worklifebalancelife.R
 import com.planethackathon.worklifebalancelife.R.id.btn_test
 import com.planethackathon.worklifebalancelife.TestActivity
@@ -19,7 +20,7 @@ class WorkFragment : Fragment() {
 
         if (mContainer == null) {
             mContainer = inflater.inflate(R.layout.fragment_work, container, false)
-
+            val btn_test = mContainer!!.findViewById<Button>(R.id.btn_test)
             btn_test.setOnClickListener { val intent = Intent(activity, TestActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent) }
