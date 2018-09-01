@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.planethackathon.worklifebalancelife.R
+import com.planethackathon.worklifebalancelife.TestActivity
 import android.widget.ImageView
 import android.widget.Toast
 import com.planethackathon.worklifebalancelife.LoginActivity
-import com.planethackathon.worklifebalancelife.R
-import com.planethackathon.worklifebalancelife.TestActivity
 import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
 
 class WorkFragment : Fragment() {
