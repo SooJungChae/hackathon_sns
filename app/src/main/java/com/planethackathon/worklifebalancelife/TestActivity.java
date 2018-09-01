@@ -30,20 +30,23 @@ import java.util.Map;
 
 public class TestActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        final Button btn = (Button) findViewById(R.id.btn_test);
+        final Button btn_add = (Button) findViewById(R.id.btn_add);
+        final Button btn_statistics = (Button) findViewById(R.id.btn_statistics);
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
             final CollectionReference logsRef = db.collection("users").document("Y3YGpTFg0Sb0kQb0BHfP").collection("logs");
 
+            //READ
             Query dayQuery = logsRef.whereEqualTo("date", "2018-09-01");
-
 
             dayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -63,11 +66,11 @@ public class TestActivity extends AppCompatActivity {
                 }
             });
 
-
+            //ADD
             final History history = new History("2018-09-31", "2018-09-31 09:00:00",
                     "2018-09-31 18:00:00", "work", 32400l);
 
-            btn.setOnClickListener(new Button.OnClickListener() {
+            btn_add.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     logsRef.document().set(history)
@@ -87,14 +90,44 @@ public class TestActivity extends AppCompatActivity {
                 }
             });
 
+            // STATISTICS
+            btn_statistics.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Query dayQuery = logsRef.whereGreaterThanOrEqualTo("date", "2018-08-27")
+                            .whereLessThanOrEqualTo("date", "2018-08-30")
+                            .whereEqualTo("tag", "work");
 
+
+                    dayQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Long result = 0l;
+                                List<History> historyList = new ArrayList<>();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    History history = new History(document.get("date").toString(), document.get("startTime").toString()
+                                            , document.get("endTime").toString(), document.get("tag").toString(), (Long) document.get("interval"));
+                                    historyList.add(history);
+                                    result += history.getInterval();
+                                    Log.d("WEEK RESULT", history.toString());
+                                }
+
+                                Log.d("WEEK", result.toString());
+
+                            } else {
+                                Log.e("STATISTICS RESULT", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+
+                }
+            });
 
         }
-
-
-
     }
 
 
-
 }
+
