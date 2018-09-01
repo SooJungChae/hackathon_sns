@@ -14,5 +14,13 @@ class GlobalUtils {
 
             return "$hours” $minutes’ $seconds."
         }
+
+        fun secToString(seconds: Long): String {
+            val seconds = (seconds) % 60
+            val minutes = (seconds / (60) % 60)
+            val hours = (seconds / (60 * 60) % 24)
+
+            return "$hours” $minutes’ $seconds."
+        }
     }
 }

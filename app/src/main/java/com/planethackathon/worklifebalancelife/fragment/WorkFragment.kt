@@ -66,7 +66,7 @@ class WorkFragment : Fragment() {
                         val setting = FiftyTwoHoursApplication.getSettingManager()
                         setting.userElapsedTime = elapsedTime
 
-                        val resultTime = GlobalUtils.millisToString(milliseconds)
+                        val resultTime = GlobalUtils.secToString(milliseconds)
 
                         txt_work_time.text = resultTime
                     } else {
