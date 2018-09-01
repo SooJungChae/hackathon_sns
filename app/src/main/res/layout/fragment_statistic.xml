@@ -98,6 +98,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/workIntervalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -107,6 +108,7 @@
             android:layout_weight="1"
             />
         <TextView
+            android:id="@+id/lifeIntervalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"

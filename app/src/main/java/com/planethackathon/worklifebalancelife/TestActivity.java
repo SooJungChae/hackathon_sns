@@ -23,14 +23,16 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.planethackathon.worklifebalancelife.common.History;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TestActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class TestActivity extends AppCompatActivity {
         final Button btn_statistics = (Button) findViewById(R.id.btn_statistics);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final TextView workIntervalTextView = (TextView) findViewById(R.id.workIntervalTextView);
+        final TextView lifeIntervalTextView = (TextView) findViewById(R.id.lifeIntervalTextView);
 
         if(user != null) {
             final CollectionReference logsRef = db.collection("users").document("Y3YGpTFg0Sb0kQb0BHfP").collection("logs");
@@ -94,8 +98,24 @@ public class TestActivity extends AppCompatActivity {
             btn_statistics.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Query dayQuery = logsRef.whereGreaterThanOrEqualTo("date", "2018-08-27")
-                            .whereLessThanOrEqualTo("date", "2018-08-30")
+                    final Calendar calendar = Calendar.getInstance();
+                    Calendar weekStart = Calendar.getInstance();
+                    Calendar weekEnd = Calendar.getInstance();
+                    weekStart.set(Calendar.DATE, calendar.getFirstDayOfWeek());
+
+                    weekEnd.setTime(weekStart.getTime());
+                    weekEnd.add(Calendar.DATE, 6);
+
+                    if (weekEnd.get(Calendar.MONTH) != calendar.get(Calendar.MONTH)) {
+                        weekEnd.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+                        weekEnd.set(Calendar.MONTH, calendar.getActualMaximum(Calendar.MONTH));
+                        weekEnd.set(Calendar.YEAR, calendar.getActualMaximum(Calendar.YEAR));
+                    }
+
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    Query dayQuery = logsRef.whereGreaterThanOrEqualTo("date", dateFormat.format(weekStart))
+                            .whereLessThanOrEqualTo("date", dateFormat.format(weekEnd))
                             .whereEqualTo("tag", "work");
 
 
@@ -104,13 +124,33 @@ public class TestActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 Long result = 0l;
-                                List<History> historyList = new ArrayList<>();
+                                final List<History> historyList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    History history = new History(document.get("date").toString(), document.get("startTime").toString()
+                                    final History history = new History(document.get("date").toString(), document.get("startTime").toString()
                                             , document.get("endTime").toString(), document.get("tag").toString(), (Long) document.get("interval"));
                                     historyList.add(history);
                                     result += history.getInterval();
                                     Log.d("WEEK RESULT", history.toString());
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Long workInterval = result;
+                                            Long hour = workInterval/3600;
+                                            workInterval -= hour * 3600;
+                                            Long min = workInterval / 60;
+                                            workInterval -= min * 60;
+
+                                            workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
+
+                                            Long lifeInterval = historyList.size() * 3600L * 24 - result;
+                                            Long hour2 = lifeInterval/3600;
+                                            lifeInterval -= hour2 * 3600;
+                                            Long min2 = lifeInterval / 60;
+                                            lifeInterval -= min2 * 60;
+
+                                            lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
+                                        }
+                                    });
                                 }
 
                                 Log.d("WEEK", result.toString());
