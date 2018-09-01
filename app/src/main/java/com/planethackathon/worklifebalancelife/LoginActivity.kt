@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.planethackathon.worklifebalancelife.common.FiftyTwoHoursApplication
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -23,9 +24,13 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
     lateinit var mGoogleApiClient: GoogleApiClient
     lateinit var mGoogleSignInClient: GoogleSignInApi
 
+    val setting = FiftyTwoHoursApplication.getSettingManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        if (setting.userId != "") successToLogin()
 
         btn_signin.setOnClickListener { onLoginWithGoogle() }
     }
@@ -59,6 +64,7 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        setting.userId = mAuth.currentUser?.uid
                         successToLogin()
                     } else {
                         failToLogin()
@@ -70,11 +76,10 @@ class LoginActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
-
         finish()
     }
 
-    fun onLoginWithGoogle() {
+    private fun onLoginWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()

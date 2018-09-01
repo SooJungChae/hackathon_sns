@@ -3,6 +3,7 @@
           package="com.planethackathon.worklifebalancelife">
 
     <application
+        android:name=".common.FiftyTwoHoursApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_app"
         android:label="@string/app_name"
