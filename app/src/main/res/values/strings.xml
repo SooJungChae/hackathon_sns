@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_login_description_1">근데, 요즘 사회는\n가족이랑 보내는 시간도, \n친구들이랑 보내는 시간도, \n나를 위해 보내는 시간도,</string>
+    <string name="txt_login_description_2">줄어들고있데요.</string>
+    <string name="txt_login_description_3">일만하다가 일주일이 가면 너무 아깝잖아요?</string>
+    <string name="txt_login_agree_privacy">로그인을 진행하면\n52시간 <b><u>개인정보취급방침</u></b>에 동의하는 것으로 간주합니다.</string>
 </resources>
