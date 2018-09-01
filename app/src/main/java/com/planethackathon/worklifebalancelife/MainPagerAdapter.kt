@@ -22,9 +22,9 @@ class MainPagerAdapter(val context: Context, fm: FragmentManager) : FragmentPage
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "sample1"
-            1 -> "sample2"
-            2 -> "sample3"
+            0 -> "Work"
+            1 -> "Life"
+            2 -> "통계"
             else -> ""
         }
     }

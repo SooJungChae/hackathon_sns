@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">52시간</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Splash -->
+    <string name="txt_splash_main">지금까지 본인이\n“일”에 투자한 시간</string>
+    <string name="txt_splash_main_without_login">나는 일만 하는\n“기계”가 아니야</string>
+
+    <string name="txt_splash_main_info_lower_time">오늘은 <b>%s</b>입니다.</string> <!-- 2018월 9월 첫째주 -->
+    <string name="txt_splash_main_info_lower">“일”말고도 시간쓸 일이 많습니다.\n가족이나 본인, 친구에게 시간을 써보는건 어때요?</string>
+
+    <!-- Work -->
+    <string name="txt_work_info">주 5일 의무 근무 시간은 <b>52시간</b> 입니다.\n이번 주에 %s님은 <b>%s</b> 근무했습니다.</string> <!-- 상훈, 38시간 12분 -->
+
+    <!-- Life -->
+    <string name="txt_life_info">일주일에 최소 30시간 이상은 가족, 친구, 나를 위해 시간을 사용하는게 좋습니다.\n이번 주에 %s님은 <b>%s</b> 근무했습니다.</string> <!-- 상훈, 38시간 12분 -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_login_description_1">근데, 요즘 사회는\n가족이랑 보내는 시간도, \n친구들이랑 보내는 시간도, \n나를 위해 보내는 시간도,</string>
     <string name="txt_login_description_2">줄어들고있데요.</string>
