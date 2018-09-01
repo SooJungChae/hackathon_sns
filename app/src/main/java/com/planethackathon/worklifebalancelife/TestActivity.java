@@ -140,7 +140,7 @@ public class TestActivity extends AppCompatActivity {
                                             Long min = workInterval / 60;
                                             workInterval -= min * 60;
 
-                                            workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
+                                            //workIntervalTextView.setText( hour + "\"" + min + "\'" + workInterval + ".");
 
                                             Long lifeInterval = historyList.size() * 3600L * 24 - result;
                                             Long hour2 = lifeInterval/3600;
@@ -148,7 +148,7 @@ public class TestActivity extends AppCompatActivity {
                                             Long min2 = lifeInterval / 60;
                                             lifeInterval -= min2 * 60;
 
-                                            lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
+                                            //lifeIntervalTextView.setText( hour2 + "\"" + min2 + "\'" + lifeInterval + ".");
                                         }
                                     });
                                 }
