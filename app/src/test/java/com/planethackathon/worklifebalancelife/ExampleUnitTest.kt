@@ -22,16 +22,16 @@ class ExampleUnitTest {
         assertEquals(1, calendar.firstDayOfWeek)
     }
 
-    @Test
-    fun testCalendar2() {
-        val calendar = Calendar.getInstance()
-        val lastDate = calendar.getActualMaximum(Calendar.DATE)
-        calendar.set(Calendar.DATE, lastDate)
-
-        val lastDay = calendar.get(Calendar.DAY_OF_WEEK)
-
-
-
-        println(lastDay)
-    }
+//    @Test
+//    fun testCalendar2() {
+//        val calendar = Calendar.getInstance()
+//        val lastDate = calendar.getActualMaximum(Calendar.DATE)
+//        calendar.set(Calendar.DATE, lastDate)
+//
+//        val lastDay = calendar.get(Calendar.DAY_OF_WEEK)
+//
+//
+//
+//        println(lastDay)
+//    }
 }

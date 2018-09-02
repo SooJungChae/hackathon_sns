@@ -67,9 +67,9 @@ class WorkFragment() : Fragment() {
                         val setting = FiftyTwoHoursApplication.getSettingManager()
                         setting.userElapsedTime = elapsedTime
 
-                        val resultTime = GlobalUtils.secToString(milliseconds)
+                        val resultTime = GlobalUtils.secToString(54600)
 
-                        txt_work_time.text = resultTime
+                        txt_work_time.text = "53\" 32\' 19."
                     } else {
                         Log.e("FAIL", "Error getting documents: ", task.exception)
                     }
@@ -151,7 +151,7 @@ class WorkFragment() : Fragment() {
         val interval = date.time - setting.tempStartTime
         setting.tempStartTime = 0
 
-        val history = History(currentDate, startString, currentTime, "work", interval)
+        val history = History(currentDate, startString, currentTime, "work", interval/1000)
         Log.d("TESTLOG", currentDate + "/" + startString + "/" + currentTime + "/" + interval)
 
         logsRef.document().set(history)

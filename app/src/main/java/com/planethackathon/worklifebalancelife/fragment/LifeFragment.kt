@@ -36,7 +36,7 @@ class LifeFragment : Fragment() {
         val setting = FiftyTwoHoursApplication.getSettingManager()
         val txtLifeInfoDetail = mContainer?.findViewById<TextView>(R.id.txt_life_info_detail)
 
-        txtLifeInfoDetail?.text = String.format(getString(R.string.txt_work_info), setting.userName, GlobalUtils.SecToNatureString(setting.userElapsedTime))
+        txtLifeInfoDetail?.text = String.format(getString(R.string.txt_life_info), setting.userName, "17분 39분 23초")
     }
 
     companion object {

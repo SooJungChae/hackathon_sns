@@ -34,7 +34,7 @@ class StatisticFragment : Fragment() {
 
             val workIntervalTextView = mContainer!!.findViewById<View>(R.id.workIntervalTextView) as TextView
             val lifeIntervalTextView = mContainer!!.findViewById<View>(R.id.lifeIntervalTextView) as TextView
-
+            btnTest.performClick()
             btnTest?.setOnClickListener{
                 val calendar = Calendar.getInstance()
                 val weekStart = Calendar.getInstance()
