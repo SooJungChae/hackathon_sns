@@ -1,7 +1,7 @@
 # :green_heart: 52" (52 hours)
+![kakaotalk_20180904_010731020](https://user-images.githubusercontent.com/12723983/45004691-be70a080-b029-11e8-8367-15d363cdea5c.png)
 
 ## Intro
-
 안녕하세요, **52"** Git 에 방문해주신 여러분 반갑습니다.:smile:<br/>
 저희는 'SNS(성남시)' 팀입니다. <br/>
 
